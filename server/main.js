@@ -1,31 +1,69 @@
 import { Meteor } from 'meteor/meteor';
-import { LinksCollection } from '/imports/api/links';
+import { TSDCollection } from '/imports/api/TimeSeriesDataCollection';
 
-function insertLink({ title, url }) {
-  LinksCollection.insert({title, url, createdAt: new Date()});
+async function insertTSDP (data) {
+	console.log(data.length, "test double entry");
+	for (i=0; i < data.length; i++) {
+		tmpTime=new Date(data[i].timestamp);
+		tmpDate=new Date(tmpTime.getFullYear(), tmpTime.getMonth(), tmpTime.getDate());
+		tmpHour=tmpTime.getHours();
+		tmpMin=tmpTime.getMinutes();
+		if (TSDCollection.find({RoomId : data[i].RoomId, date: tmpDate, 
+				"Datapoint.hour": tmpHour}).count() != 0) {
+			TSDCollection.update({ 
+				RoomId : data[i].RoomId,
+				date: tmpDate,
+				"Datapoint.hour": tmpHour
+			}, 
+			{$addToSet: 
+				{"Datapoint.$.more": 
+					{
+						"min": tmpMin,
+						"temperature": data[i].temperature
+					}
+				}
+			})
+		} 
+		else if (TSDCollection.find({RoomId : data[i].RoomId, date: tmpDate}).count() != 0) {
+			TSDCollection.update({ 
+				RoomId : data[i].RoomId,
+				date: tmpDate,
+			}, 
+			{$addToSet: 
+				{Datapoint: {hour:tmpHour, more:[{min:tmpMin, temperature:data[i].temperature}]}}
+			})
+		}
+		else {
+			TSDCollection.insert({
+				RoomId: data[i].RoomId, 
+				date: tmpDate,
+				Datapoint: [{hour:tmpHour, more:[{min:tmpMin, temperature:data[i].temperature}]}]
+			});
+		}
+	};
+	
 }
 
+function parseCSV () {
+	var csv = Assets.getText('room-temperatures.csv');
+	var secondIteration = false;
+	var rows = Papa.parse(csv, {
+		header:true,
+		skipEmptyLines:true,
+		complete: function(results) {
+			if (secondIteration) { return; }
+			else { 
+				secondIteration = true;
+				insertTSDP(results.data);
+			}
+		}
+	});
+}
+	
+
 Meteor.startup(() => {
-  // If the Links collection is empty, add some data.
-  if (LinksCollection.find().count() === 0) {
-    insertLink({
-      title: 'Do the Tutorial',
-      url: 'https://www.meteor.com/tutorials/react/creating-an-app'
-    });
-
-    insertLink({
-      title: 'Follow the Guide',
-      url: 'http://guide.meteor.com'
-    });
-
-    insertLink({
-      title: 'Read the Docs',
-      url: 'https://docs.meteor.com'
-    });
-
-    insertLink({
-      title: 'Discussions',
-      url: 'https://forums.meteor.com'
-    });
-  }
+	if (TSDCollection.find().count() === 0) {
+		parseCSV();
+	}
 });
+
