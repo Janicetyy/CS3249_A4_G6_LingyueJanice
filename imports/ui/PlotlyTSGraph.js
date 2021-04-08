@@ -136,11 +136,13 @@ export class TSGraph extends React.Component {
 	formatPlotData () {		
 		var allData = this.getAllRoomData();
 		this.getAllAvg(allData);
+		var tog = this.props.toggle;
 		
 		var trace0 = {
 		  type: "scatter",
 		  mode: "lines",
 		  name: 'Room 0',
+		  visible: (tog & 0b0000001) === 0b0000001? true : "legendonly",
 		  x: allData[0].roomX,
 		  y: allData[0].roomY,
 		  line: {color: '#5da5da'}
@@ -150,6 +152,7 @@ export class TSGraph extends React.Component {
 		  type: "scatter",
 		  mode: "lines",
 		  name: 'Room 1',
+		  visible: (tog & 0b0000010) === 0b0000010? true : "legendonly",
 		  x: allData[1].roomX,
 		  y: allData[1].roomY,
 		  line: {color: '#f15854'}
@@ -159,6 +162,7 @@ export class TSGraph extends React.Component {
 		  type: "scatter",
 		  mode: "lines",
 		  name: 'Room 2',
+		  visible: (tog & 0b0000100) === 0b0000100? true : "legendonly",
 		  x: allData[2].roomX,
 		  y: allData[2].roomY,
 		  line: {color: '#60bd68'}
@@ -167,6 +171,7 @@ export class TSGraph extends React.Component {
 		  type: "scatter",
 		  mode: "lines",
 		  name: 'Room 3',
+		  visible: (tog & 0b0001000) === 0b0001000? true : "legendonly",
 		  x: allData[3].roomX,
 		  y: allData[3].roomY,
 		  line: {color: '#b276b2'}
@@ -176,6 +181,7 @@ export class TSGraph extends React.Component {
 		  type: "scatter",
 		  mode: "lines",
 		  name: 'Room 4',
+		  visible: (tog & 0b0010000) === 0b0010000? true : "legendonly",
 		  x: allData[4].roomX,
 		  y: allData[4].roomY,
 		  line: {color: '#f49436'}
@@ -185,6 +191,7 @@ export class TSGraph extends React.Component {
 		  type: "scatter",
 		  mode: "lines",
 		  name: 'Room 5',
+		  visible: (tog & 0b0100000) === 0b0100000? true : "legendonly",
 		  x: allData[5].roomX,
 		  y: allData[5].roomY,
 		  line: {color: '#3bbdbd'}
@@ -193,6 +200,7 @@ export class TSGraph extends React.Component {
 		  type: "scatter",
 		  mode: "lines",
 		  name: 'Room 6',
+		  visible: (tog & 0b1000000) === 0b1000000? true : "legendonly",
 		  x: allData[6].roomX,
 		  y: allData[6].roomY,
 		  line: {color: '#634792'}

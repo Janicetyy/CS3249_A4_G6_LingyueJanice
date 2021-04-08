@@ -129,7 +129,7 @@ export function FloorPlan(props) {
 		props.onToggle(event);
 		determineRoomColour(event);
 		//saveState();
-		console.log(state.value);
+		//console.log(state.value);
 	}
 	
 	/*function saveState() {
@@ -184,7 +184,7 @@ export function FloorPlan(props) {
             }
 		}
 		setRoomColours(temparray);
-		console.log(temparray);
+		//console.log(temparray);
 	}
 	
 	useEffect(() => {

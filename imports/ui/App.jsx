@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { TSGSub } from '/imports/ui/ClientSub'
 import { TSDCollection } from '/imports/db/TimeSeriesDataCollection';
 import { TSGraph } from '/imports/ui/PlotlyTSGraph';
-import { FloorPlan } from '/imports/ui/FloorPlan';
+import { FloorPlan } from '/imports/ui/FloorPlan2';
 import { TopAdjustmentPanel } from '/imports/ui/TopAdjustmentPanel';
 
 export function App() {
@@ -14,7 +14,7 @@ export function App() {
 	const [chartWidth, setChartWidth] = useState(76);
 	const [max, setMax] = useState(76);
 	const [avg, setAvg] = useState([20,20,20,20,20,20,20]);
-	var average = [20,20,20,20,20,20,20];
+	const [traceToggle, setTraceToggle] = useState(0b1111111);
 	const useSub = TSGSub(startDate, endDate, roomId);
 
 	function checkEndDate(e) {
@@ -59,13 +59,14 @@ export function App() {
 		setChartWidth(e);
 	}
 	
-	function handleRoomToggle(e) {
-		var roomId = "room" + e;
+	function handleRoomToggle (e) {
+		setTraceToggle(e);
 	}
 
 	function handleAvgChange(e) {
 		avg[e.room] = e.value;
 		setAvg(avg);
+		//console.log(avg);
 	}
 
 
@@ -78,6 +79,7 @@ export function App() {
 				roomIds = {roomId}
 				onGetDates={handleDates}
 				onMaxChange={handleMax}
+				toggle={traceToggle}
 				onAvgChange0={(e)=>handleAvgChange({value:e, room:0})}
 				onAvgChange1={(e)=>handleAvgChange({value:e, room:1})}
 				onAvgChange2={(e)=>handleAvgChange({value:e, room:2})}
@@ -104,6 +106,7 @@ export function App() {
 			<div style={{textAlign:"center"}}>
 				<FloorPlan 
 					tempList = {avg}
+					toggle={traceToggle}
 					onToggle = {handleRoomToggle}/>
 			</div>
 		</div>
