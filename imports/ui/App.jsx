@@ -66,7 +66,6 @@ export function App() {
 	function handleAvgChange(e) {
 		avg[e.room] = e.value;
 		setAvg(avg);
-		//console.log(avg);
 	}
 
 

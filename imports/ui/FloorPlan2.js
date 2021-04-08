@@ -20,7 +20,6 @@ export class FloorPlan extends React.Component {
 	
 	updateColor(){
 		var temp = this.props.tempList;
-        //console.log(temp);
         var color = [];
         var i = 0;
         for (const tog in this.state.toggle){
@@ -61,19 +60,14 @@ export class FloorPlan extends React.Component {
 	
 	componentDidMount() {
 		var color = this.updateColor();
-		//console.log(color);
 		this.setState({
 				color: color
-		}, () => { 
-		//console.log(color[0], this.state.color0);
 		});
 	}
 	
 	componentDidUpdate(prevProps, prevState) {
         
 		var color = this.updateColor();
-        //console.log(color);
-		//console.log(prevProps);
 		if(
 			(this.state.color[0] !== color[0]) ||
 			(this.state.color[1] !== color[1]) ||
@@ -83,10 +77,8 @@ export class FloorPlan extends React.Component {
 			(this.state.color[5] !== color[5]) ||
 			(this.state.color[6] !== color[6]) 
 		){
-			console.log("diff",this.state.color,color);
 			this.setState({
 					color: color
-				//console.log(this.state.color);
 			});
 		}
 	}
