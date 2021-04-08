@@ -10,13 +10,13 @@ export class TSGraph extends React.Component {
 			data: [], 
 			layout: {}, 
 			frames: [], 
-			config: {}
+			config: {},
 		};
 	}
 	
 	componentDidMount() {
 		this.setState({
-			data: this.createData() ,
+			data: this.formatPlotData() ,
 			layout: {
 				title: 'Temperature vs Timestamp',
 				autosize:true,
@@ -37,8 +37,7 @@ export class TSGraph extends React.Component {
 		});
 	}
 	
-	RetrievePlotData(props) {
-	
+	retrievePlotData(props) {
 		var startDate = new Date(
 			props.startDate.getFullYear(),
 			props.startDate.getMonth(),
@@ -55,10 +54,7 @@ export class TSGraph extends React.Component {
 			date: { $gte : startDate, $lte: endDate }		
 			}).fetch();
 		
-		//console.log(TSDCollection.find().fetch());
-		//console.log(results);
-		
-		var allData=[];
+		var roomData=[];
 		//map db data into array for chart plotting
 		results.map((sample) => {
 			var i;
@@ -75,38 +71,71 @@ export class TSGraph extends React.Component {
 					
 					if ((tmp.getTime() <= props.endDate.getTime()) 
 						&& (tmp.getTime() >= props.startDate.getTime())) {
-						allData.push({x:tmp, y:sample.Datapoint[i].more[j].temperature});
+						roomData.push({x:tmp, y:sample.Datapoint[i].more[j].temperature});
 					}
 				}
 			}
 		});
 		
-		var length = allData.length;
+		var length = roomData.length;
 		this.props.onMaxChange(length);
+		
+		var average = this.getRoomAverage(roomData);
 		
 		var roomX = [];
 		var roomY = [];
-		const downsampled = LTTB(allData, this.props.chartWidth);
+		const downsampled = LTTB(roomData, props.chartWidth);
 		downsampled.forEach((sample) => {
 			roomX.push(sample.x);
 			roomY.push(sample.y);
 		})
 		
-		return {roomX, roomY};
+		return {roomX, roomY, average};
 	}
 	
-	createData () {
-		
-		var roomIds = ['0','1','2','3','4','5','6'];
+	getRoomAverage(roomData) {
+		var total = 0;
+		var count = roomData.length;
+		var roomTemps = roomData.y;
+		roomData.forEach((temperature) => {
+			total += temperature.y;
+		})
+		var avg = total / count;	
+		return avg;
+	}
+	
+	getAllAvg(allData){
+		var allTemp = [];
+		if(allData[0] !== 'undefined') {
+			allData.forEach((roomTemp) => {
+				allTemp.push(Math.round(roomTemp.average));
+			});
+			this.props.onAvgChange0(allTemp[0]);
+			this.props.onAvgChange1(allTemp[1]);
+			this.props.onAvgChange2(allTemp[2]);
+			this.props.onAvgChange3(allTemp[3]);
+			this.props.onAvgChange4(allTemp[4]);
+			this.props.onAvgChange5(allTemp[5]);
+			this.props.onAvgChange6(allTemp[6]);
+		}
+	}
+	
+	getAllRoomData() {
+		var roomIds = this.props.roomIds;
 		var allData = [];
 		roomIds.forEach((roomId) => {
-			allData.push(this.RetrievePlotData({
+			allData.push(this.retrievePlotData({
 				RoomId:roomId,
 				startDate:this.props.startDate,
 				endDate:this.props.endDate,
-				rate:this.props.rate}));
+				chartWidth:this.props.chartWidth}));
 		})
-		//console.log(allData);
+		return allData;
+	}
+	
+	formatPlotData () {		
+		var allData = this.getAllRoomData();
+		this.getAllAvg(allData);
 		
 		var trace0 = {
 		  type: "scatter",
@@ -188,7 +217,7 @@ export class TSGraph extends React.Component {
         frames={this.state.frames}
         config={this.state.config}
 		useResizeHandler
-        style={{ width: "100%", height: "100%" }}
+		style={{width:"100%"}}
 		onRelayout={(e) => this.handleRelayout(e)}
       />
     );
