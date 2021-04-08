@@ -144,6 +144,7 @@ export function FloorPlan(props) {
 	}*/
 	
 	function determineRoomColour(room) {
+		console.log("here");
 		var temparray = roomColours;
 		var roomNum = Number(room);
 		if (state.matches({["room" + room]:'hide'})){
@@ -183,14 +184,29 @@ export function FloorPlan(props) {
             }
 		}
 		setRoomColours(temparray);
+		console.log(temparray);
 	}
+	
+	useEffect(() => {
+		function initialize() {
+			determineRoomColour('0');
+			determineRoomColour('1');
+			determineRoomColour('2');
+			determineRoomColour('3');
+			determineRoomColour('4');
+			determineRoomColour('5');
+			determineRoomColour('6');
+		}
+		
+		initialize();
+	 });
 	
 	return (
 		<div>
 			<svg
 				   xmlns="http://www.w3.org/2000/svg"
 				   width="40%"
-				   height="30%"
+				   height="40%"
 				   viewBox="0 0 208 161"
 				   version="1.1">
 				  <g>
