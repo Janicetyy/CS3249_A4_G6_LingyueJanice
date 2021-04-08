@@ -80,7 +80,11 @@ export class TSGraph extends React.Component {
 		var length = roomData.length;
 		this.props.onMaxChange(length);
 		
-		var average = this.getRoomAverage(roomData);
+		if(roomData.length == 0) {
+			var average = 0;
+		} else {
+			var average = this.getRoomAverage(roomData);
+		}
 		
 		var roomX = [];
 		var roomY = [];

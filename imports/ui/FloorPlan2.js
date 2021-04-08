@@ -11,27 +11,16 @@ export class FloorPlan extends React.Component {
         this.handleRoom4 = this.handleRoom4.bind(this);
         this.handleRoom5 = this.handleRoom5.bind(this);
         this.handleRoom6 = this.handleRoom6.bind(this);
-
         this.state = {
-            color0: 'rgb(255,255,255)',
-            color1: 'rgb(255,255,255)',
-            color2: 'rgb(255,255,255)',
-            color3: 'rgb(255,255,255)',
-            color4: 'rgb(255,255,255)',
-            color5: 'rgb(255,255,255)',
-            color6: 'rgb(255,255,255)',
+            color: ['rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)',
+			'rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)'],
             toggle: {room0: true,room1: true,room2: true, room3:true, room4:true, room5:true, room6:true}
         }
     }
-
-    componentDidUpdate() {
-		console.log("here");
-        this.colorPicker();
-    }
-
-    colorPicker() {
-        var temp = this.props.tempList;
-        
+	
+	updateColor(){
+		var temp = this.props.tempList;
+        //console.log(temp);
         var color = [];
         var i = 0;
         for (const tog in this.state.toggle){
@@ -66,19 +55,41 @@ export class FloorPlan extends React.Component {
             }
             i++;
         }
-        console.log(color);
-        this.setState = ({
-            color0: color[0],
-            color1: color[1],
-            color2: color[2],
-            color3: color[3],
-            color4: color[4],
-            color5: color[5],
-            color6: color[6]
-        });
-        console.log(this.state.color0)
-
-    }
+		
+		return color;
+	}
+	
+	componentDidMount() {
+		var color = this.updateColor();
+		//console.log(color);
+		this.setState({
+				color: color
+		}, () => { 
+		//console.log(color[0], this.state.color0);
+		});
+	}
+	
+	componentDidUpdate(prevProps, prevState) {
+        
+		var color = this.updateColor();
+        //console.log(color);
+		//console.log(prevProps);
+		if(
+			(this.state.color[0] !== color[0]) ||
+			(this.state.color[1] !== color[1]) ||
+			(this.state.color[2] !== color[2]) ||
+			(this.state.color[3] !== color[3]) ||
+			(this.state.color[4] !== color[4]) ||
+			(this.state.color[5] !== color[5]) ||
+			(this.state.color[6] !== color[6]) 
+		){
+			console.log("diff",this.state.color,color);
+			this.setState({
+					color: color
+				//console.log(this.state.color);
+			});
+		}
+	}
 
     handleRoom0() {
         var toggle = this.props.toggle;
@@ -154,19 +165,19 @@ export class FloorPlan extends React.Component {
 				   version="1.1">
 				  <g>
 					<g style={{cursor:'pointer'}}>
-						<rect style={{fill:this.state.color0}} width="80" height="70" x="7" y="7" 
+						<rect style={{fill:this.state.color[0]}} width="80" height="70" x="7" y="7" 
 							onClick={this.handleRoom0}/>
-						<rect style={{fill:this.state.color1}} width="30" height="40" x="7" y="121" 
+						<rect style={{fill:this.state.color[1]}} width="30" height="40" x="7" y="121" 
 							onClick={this.handleRoom1}/>
-						<rect style={{fill:this.state.color2}} width="30" height="40" x="40" y="121" 
+						<rect style={{fill:this.state.color[2]}} width="30" height="40" x="40" y="121" 
 							onClick={this.handleRoom2}/>
-						<rect style={{fill:this.state.color3}} width="30" height="40" x="73" y="121" 
+						<rect style={{fill:this.state.color[3]}} width="30" height="40" x="73" y="121" 
 							onClick={this.handleRoom3}/>
-						<rect style={{fill:this.state.color4}} width="30" height="40" x="106" y="121" 
+						<rect style={{fill:this.state.color[4]}} width="30" height="40" x="106" y="121" 
 							onClick={this.handleRoom4}/>
-						<rect style={{fill:this.state.color5}} width="30" height="40" x="139" y="121" 
+						<rect style={{fill:this.state.color[5]}} width="30" height="40" x="139" y="121" 
 							onClick={this.handleRoom5}/>
-						<rect style={{fill:this.state.color6}} width="30" height="40" x="172" y="121" 
+						<rect style={{fill:this.state.color[6]}} width="30" height="40" x="172" y="121" 
 							onClick={this.handleRoom6}/>
 					</g>
 					<g style = {{fontSize:"4px", fontFamily:"sans-serif"}}>

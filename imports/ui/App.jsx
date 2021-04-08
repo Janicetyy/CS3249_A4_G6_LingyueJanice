@@ -91,6 +91,15 @@ export function App() {
 		);
 	}
 	
+	function LoadFloorPlan() {
+		return (
+			<FloorPlan 
+				tempList = {avg}
+				toggle={traceToggle}
+				onToggle = {handleRoomToggle}/>
+		);
+	}
+	
 	return (
 		<div>
 			<TopAdjustmentPanel 
@@ -101,13 +110,10 @@ export function App() {
 				onEndDateChange = {checkEndDate}
 				onChartWidthChange = {handleChartWidth}/>
 			<div style={{marginLeft:"3%", marginRight:"3%"}}>
-				<LoadGraph/>
+				<LoadGraph />
 			</div>
 			<div style={{textAlign:"center"}}>
-				<FloorPlan 
-					tempList = {avg}
-					toggle={traceToggle}
-					onToggle = {handleRoomToggle}/>
+				<LoadFloorPlan />
 			</div>
 		</div>
 	)
