@@ -101,14 +101,16 @@ export function App() {
 	
 	return (
 		<div>
-			<TopAdjustmentPanel 
-				startDate = {startDate} 
-				endDate = {endDate} 
-				max = {max}
-				onStartDateChange = {checkStartDate} 
-				onEndDateChange = {checkEndDate}
-				onChartWidthChange = {handleChartWidth}/>
-			<div style={{marginLeft:"3%", marginRight:"3%"}}>
+			<div>
+				<TopAdjustmentPanel 
+					startDate = {startDate} 
+					endDate = {endDate} 
+					max = {max}
+					onStartDateChange = {checkStartDate} 
+					onEndDateChange = {checkEndDate}
+					onChartWidthChange = {handleChartWidth}/>
+			</div>
+			<div style={{marginLeft:"3%", marginRight:"3%", width:"90%"}}>
 				<LoadGraph />
 			</div>
 			<div style={{textAlign:"center"}}>

@@ -19,7 +19,8 @@ export class TSGraph extends React.Component {
 			data: this.formatPlotData() ,
 			layout: {
 				title: 'Temperature vs Timestamp',
-				autosize:true,
+				autosize:false,
+				width:1250,
 				xaxis: { 
 					autorange: true,
 					type: 'date'

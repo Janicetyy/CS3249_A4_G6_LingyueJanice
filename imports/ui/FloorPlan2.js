@@ -61,7 +61,7 @@ export class FloorPlan extends React.Component {
 	componentDidMount() {
 		var color = this.updateColor();
 		this.setState({
-				color: color
+			color: color
 		});
 	}
 	
@@ -78,7 +78,7 @@ export class FloorPlan extends React.Component {
 			(this.state.color[6] !== color[6]) 
 		){
 			this.setState({
-					color: color
+				color: color
 			});
 		}
 	}
@@ -88,7 +88,7 @@ export class FloorPlan extends React.Component {
         toggle = toggle ^ 0b0000001;
         this.props.onToggle(toggle);
         this.setState = ({
-            toggle: {room0:((toggle & 0b0000001) === 0b0000001)}
+            toggle: {...toggle,room0:((toggle & 0b0000010) === 0b0000010) }
         });
     }
 
