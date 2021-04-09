@@ -3,7 +3,6 @@ import React from 'react';
 export class FloorPlan extends React.Component {
     constructor(props){
         super(props);
-
         this.handleRoom0 = this.handleRoom0.bind(this);
         this.handleRoom1 = this.handleRoom1.bind(this);
         this.handleRoom2 = this.handleRoom2.bind(this);
@@ -14,136 +13,117 @@ export class FloorPlan extends React.Component {
         this.state = {
             color: ['rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)',
 			'rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)'],
-            toggle: {room0: true,room1: true,room2: true, room3:true, room4:true, room5:true, room6:true}
+            roomToggle: {room0: true,room1: true,room2: true, room3:true, room4:true, room5:true, room6:true}
         }
     }
 	
 	updateColor(){
+		console.log(this.state.roomToggle.room0);
 		var temp = this.props.tempList;
+		var togObj = this.state.roomToggle;
         var color = [];
         var i = 0;
-        for (const tog in this.state.toggle){
+        for (const tog in togObj){
             if(temp[i]>23) {
-                color[i] = tog?'rgb(200,200,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(200,200,255)':'rgb(255,255,255)';
             } else if (temp[i]>22.5) {
-                color[i] = tog?'rgb(185,185,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(185,185,255)':'rgb(255,255,255)';
             } else if (temp[i]>22) {
-                color[i] = tog?'rgb(170,170,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(170,170,255)':'rgb(255,255,255)';
             } else if (temp[i]>21.5) {
-                color[i] = tog?'rgb(155,155,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(155,155,255)':'rgb(255,255,255)';
             } else if (temp[i]>21) {
-                color[i] = tog?'rgb(140,140,255)':'rgb(255,255,255)'; 
+                color[i] = togObj[tog]?'rgb(140,140,255)':'rgb(255,255,255)'; 
             } else if (temp[i]>20.5) {
-                color[i] = tog?'rgb(125,125,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(125,125,255)':'rgb(255,255,255)';
             } else if (temp[i]>20) {
-                color[i] = tog?'rgb(110,110,255)':'rgb(255,255,255)'; 
+                color[i] = togObj[tog]?'rgb(110,110,255)':'rgb(255,255,255)'; 
             } else if (temp[i]>19.5) {
-                color[i] = tog?'rgb(95,95,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(95,95,255)':'rgb(255,255,255)';
             } else if (temp[i]>19) {
-                color[i] = tog?'rgb(80,80,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(80,80,255)':'rgb(255,255,255)';
             } else if (temp[i]>18.5) {
-                color[i] = tog?'rgb(65,65,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(65,65,255)':'rgb(255,255,255)';
             } else if (temp[i]>18) {
-                color[i] = tog?'rgb(50,50,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(50,50,255)':'rgb(255,255,255)';
             } else if (temp[i]>17.5) {
-                color[i] = tog?'rgb(35,35,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(35,35,255)':'rgb(255,255,255)';
             } else if (temp[i]>17) {
-                color[i] = tog?'rgb(20,20,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(20,20,255)':'rgb(255,255,255)';
             } else {
-                color[i] = tog?'rgb(5,5,255)':'rgb(255,255,255)';
+                color[i] = togObj[tog]?'rgb(5,5,255)':'rgb(255,255,255)';
             }
             i++;
         }
-		
 		return color;
 	}
 	
 	componentDidMount() {
 		var color = this.updateColor();
 		this.setState({
-			color: color
+			color: color,
+			roomToggle: {
+				room0: ((this.props.toggle & 0b0000001) === 0b0000001),
+				room1: ((this.props.toggle & 0b0000010) === 0b0000010),
+				room2: ((this.props.toggle & 0b0000100) === 0b0000100),
+				room3: ((this.props.toggle & 0b0001000) === 0b0001000),
+				room4: ((this.props.toggle & 0b0010000) === 0b0010000),
+				room5: ((this.props.toggle & 0b0100000) === 0b0100000),
+				room6: ((this.props.toggle & 0b1000000) === 0b1000000)
+			}
 		});
 	}
-	
-	componentDidUpdate(prevProps, prevState) {
-        
-		var color = this.updateColor();
-		if(
-			(this.state.color[0] !== color[0]) ||
-			(this.state.color[1] !== color[1]) ||
-			(this.state.color[2] !== color[2]) ||
-			(this.state.color[3] !== color[3]) ||
-			(this.state.color[4] !== color[4]) ||
-			(this.state.color[5] !== color[5]) ||
-			(this.state.color[6] !== color[6]) 
-		){
+
+	componentDidUpdate(prevProps,prevState) {
+		if ((this.state.roomToggle !== prevState.roomToggle)) {
+			var color = this.updateColor();
 			this.setState({
 				color: color
 			});
 		}
 	}
 
+
     handleRoom0() {
         var toggle = this.props.toggle;
-        toggle = toggle ^ 0b0000001;
-        this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {...toggle,room0:((toggle & 0b0000010) === 0b0000010) }
-        });
+		toggle = toggle ^ 0b0000001;
+		this.props.onToggle(toggle);
     }
 
     handleRoom1() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0000010;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room1:((toggle & 0b0000010) === 0b0000010)}
-        });
     }
 
     handleRoom2() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0000100;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room2:((toggle & 0b0000100) === 0b0000100)}
-        });
     }
 
     handleRoom3() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0001000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room3:((toggle & 0b0001000) === 0b0001000)}
-        });
     }
 
     handleRoom4() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0010000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room4:((toggle & 0b0010000) === 0b0010000)}
-        });
     }
 
     handleRoom5() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0100000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room5:((toggle & 0b0100000) === 0b0100000)}
-        });
     }
 
     handleRoom6() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b1000000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room6:((toggle & 0b1000000) === 0b1000000)}
-      });
     }
     render(){
         return( 
@@ -172,31 +152,31 @@ export class FloorPlan extends React.Component {
 						<rect style={{fill:this.state.color[6]}} width="30" height="40" x="172" y="121" 
 							onClick={this.handleRoom6}/>
 					</g>
-					<g style = {{fontSize:"4px", fontFamily:"sans-serif"}}>
-						<text x="30" y="30">UPPER LEVEL</text>
-						<text x="30" y="34">RESIDENTIAL</text>
-						<text x="30" y="38">LOUNGE</text>		
-						<text x="15" y="138">SINGLE</text>
-						<text x="12" y="142">BEDROOM</text>
-						<text x="48" y="138">SINGLE</text>
-						<text x="45" y="142">BEDROOM</text>	
-						<text x="81" y="138">SINGLE</text>
-						<text x="78" y="142">BEDROOM</text>
-						<text x="113" y="138">SINGLE</text>
-						<text x="110" y="142">BEDROOM</text>
-						<text x="146" y="138">SINGLE</text>
-						<text x="143" y="142">BEDROOM</text>		   
-						<text x="180" y="138">SINGLE</text>
-						<text x="176" y="142">BEDROOM</text>
+					<g style = {{fontSize:"4px", fontFamily:"sans-serif", cursor:'pointer'}}>
+						<text x="30" y="30" onClick={this.handleRoom0}>UPPER LEVEL</text>
+						<text x="30" y="34" onClick={this.handleRoom0}>RESIDENTIAL</text>
+						<text x="30" y="38" onClick={this.handleRoom0}>LOUNGE</text>		
+						<text x="15" y="138" onClick={this.handleRoom1}>SINGLE</text>
+						<text x="12" y="142" onClick={this.handleRoom1}>BEDROOM</text>
+						<text x="48" y="138" onClick={this.handleRoom2}>SINGLE</text>
+						<text x="45" y="142" onClick={this.handleRoom2}>BEDROOM</text>	
+						<text x="81" y="138" onClick={this.handleRoom3}>SINGLE</text>
+						<text x="78" y="142" onClick={this.handleRoom3}>BEDROOM</text>
+						<text x="113" y="138" onClick={this.handleRoom4}>SINGLE</text>
+						<text x="110" y="142" onClick={this.handleRoom4}>BEDROOM</text>
+						<text x="146" y="138" onClick={this.handleRoom5}>SINGLE</text>
+						<text x="143" y="142" onClick={this.handleRoom5}>BEDROOM</text>		   
+						<text x="180" y="138" onClick={this.handleRoom6}>SINGLE</text>
+						<text x="176" y="142" onClick={this.handleRoom6}>BEDROOM</text>
 					</g>
-					<g style = {{fontSize:"10px", fontFamily:"Algerian"}}>
-						<text x="28" y="55">Room 0</text>
-						<text x="17" y="152">R1</text>
-						<text x="50" y="152">R2</text>
-						<text x="83" y="152">R3</text>
-						<text x="115" y="152">R4</text>
-						<text x="148" y="152">R5</text>
-						<text x="181" y="152">R6</text>
+					<g style = {{fontSize:"10px", fontFamily:"Algerian", cursor:'pointer'}}>
+						<text x="28" y="55" onClick={this.handleRoom0}>Room 0</text>
+						<text x="17" y="152" onClick={this.handleRoom1}>R1</text>
+						<text x="50" y="152" onClick={this.handleRoom2}>R2</text>
+						<text x="83" y="152" onClick={this.handleRoom3}>R3</text>
+						<text x="115" y="152" onClick={this.handleRoom4}>R4</text>
+						<text x="148" y="152" onClick={this.handleRoom5}>R5</text>
+						<text x="181" y="152" onClick={this.handleRoom6}>R6</text>
 					</g>
 					
 					<g style = {{fill:"none",stroke: "#4f4f4f", strokeWidth:"2"}}>

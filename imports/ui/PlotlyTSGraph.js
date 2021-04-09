@@ -150,7 +150,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0000001) === 0b0000001? true : "legendonly",
 		  x: allData[0].roomX,
 		  y: allData[0].roomY,
-		  line: {color: '#5da5da'}
+		  line: {color: 'rgb(0,0,255)'}
 		}
 
 		var trace1 = {
@@ -160,7 +160,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0000010) === 0b0000010? true : "legendonly",
 		  x: allData[1].roomX,
 		  y: allData[1].roomY,
-		  line: {color: '#f15854'}
+		  line: {color: 'rgb(0,255,0)'}
 		}
 		
 		var trace2 = {
@@ -170,7 +170,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0000100) === 0b0000100? true : "legendonly",
 		  x: allData[2].roomX,
 		  y: allData[2].roomY,
-		  line: {color: '#60bd68'}
+		  line: {color: 'rgb(255,0,0)'}
 		}
 		 var trace3 = {
 		  type: "scatter",
@@ -179,7 +179,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0001000) === 0b0001000? true : "legendonly",
 		  x: allData[3].roomX,
 		  y: allData[3].roomY,
-		  line: {color: '#b276b2'}
+		  line: {color: 'rgb(255,255,0)'}
 		}
 
 		var trace4 = {
@@ -189,7 +189,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0010000) === 0b0010000? true : "legendonly",
 		  x: allData[4].roomX,
 		  y: allData[4].roomY,
-		  line: {color: '#f49436'}
+		  line: {color: 'rgb(255,0,255)'}
 		}
 		
 		var trace5 = {
@@ -199,7 +199,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0100000) === 0b0100000? true : "legendonly",
 		  x: allData[5].roomX,
 		  y: allData[5].roomY,
-		  line: {color: '#3bbdbd'}
+		  line: {color: 'rgb(0,255,255)'}
 		}		
 		var trace6 = {
 		  type: "scatter",
@@ -208,7 +208,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b1000000) === 0b1000000? true : "legendonly",
 		  x: allData[6].roomX,
 		  y: allData[6].roomY,
-		  line: {color: '#634792'}
+		  line: {color: 'rgb(0,0,0)'}
 		}	
 		return [trace0,trace1,trace2,trace3,trace4,trace5,trace6];
 	}
