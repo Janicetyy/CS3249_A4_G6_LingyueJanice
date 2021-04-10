@@ -19,8 +19,8 @@ export class TSGraph extends React.Component {
 			data: this.formatPlotData() ,
 			layout: {
 				title: 'Temperature vs Timestamp',
-				autosize:false,
-				width:1250,
+				y_anchor: "top",
+				autosize:true,
 				xaxis: { 
 					autorange: true,
 					type: 'date'
@@ -206,6 +206,7 @@ export class TSGraph extends React.Component {
         frames={this.state.frames}
         config={this.state.config}
 		useResizeHandler
+		style={{width:"100%"}}
 		onRelayout={(e) => this.handleRelayout(e)}
       />
     );

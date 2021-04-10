@@ -150,31 +150,31 @@ export class FloorPlan extends React.Component {
 						<rect style={{fill:this.state.color[6]}} width="30" height="40" x="172" y="121" 
 							onClick={this.handleRoom6}/>
 					</g>
-					<g style = {{fontSize:"4px", fontFamily:"sans-serif"}}>
-						<text x="30" y="30">UPPER LEVEL</text>
-						<text x="30" y="34">RESIDENTIAL</text>
-						<text x="30" y="38">LOUNGE</text>		
-						<text x="15" y="138">SINGLE</text>
-						<text x="12" y="142">BEDROOM</text>
-						<text x="48" y="138">SINGLE</text>
-						<text x="45" y="142">BEDROOM</text>	
-						<text x="81" y="138">SINGLE</text>
-						<text x="78" y="142">BEDROOM</text>
-						<text x="113" y="138">SINGLE</text>
-						<text x="110" y="142">BEDROOM</text>
-						<text x="146" y="138">SINGLE</text>
-						<text x="143" y="142">BEDROOM</text>		   
-						<text x="180" y="138">SINGLE</text>
-						<text x="176" y="142">BEDROOM</text>
+					<g style = {{fontSize:"4px", fontFamily:"sans-serif", cursor:'pointer'}}>
+						<text x="30" y="30" onClick={this.handleRoom0}>UPPER LEVEL</text>
+						<text x="30" y="34" onClick={this.handleRoom0}>RESIDENTIAL</text>
+						<text x="30" y="38" onClick={this.handleRoom0}>LOUNGE</text>		
+						<text x="15" y="138" onClick={this.handleRoom1}>SINGLE</text>
+						<text x="12" y="142" onClick={this.handleRoom1}>BEDROOM</text>
+						<text x="48" y="138" onClick={this.handleRoom2}>SINGLE</text>
+						<text x="45" y="142" onClick={this.handleRoom2}>BEDROOM</text>	
+						<text x="81" y="138" onClick={this.handleRoom3}>SINGLE</text>
+						<text x="78" y="142" onClick={this.handleRoom3}>BEDROOM</text>
+						<text x="113" y="138" onClick={this.handleRoom4}>SINGLE</text>
+						<text x="110" y="142" onClick={this.handleRoom4}>BEDROOM</text>
+						<text x="146" y="138" onClick={this.handleRoom5}>SINGLE</text>
+						<text x="143" y="142" onClick={this.handleRoom5}>BEDROOM</text>		   
+						<text x="180" y="138" onClick={this.handleRoom6}>SINGLE</text>
+						<text x="176" y="142" onClick={this.handleRoom6}>BEDROOM</text>
 					</g>
-					<g style = {{fontSize:"10px", fontFamily:"Algerian"}}>
-						<text x="28" y="55">Room 0</text>
-						<text x="17" y="152">R1</text>
-						<text x="50" y="152">R2</text>
-						<text x="83" y="152">R3</text>
-						<text x="115" y="152">R4</text>
-						<text x="148" y="152">R5</text>
-						<text x="181" y="152">R6</text>
+					<g style = {{fontSize:"10px", fontFamily:"Algerian", cursor:'pointer'}}>
+						<text x="28" y="55" onClick={this.handleRoom0}>Room 0</text>
+						<text x="17" y="152" onClick={this.handleRoom1}>R1</text>
+						<text x="50" y="152" onClick={this.handleRoom2}>R2</text>
+						<text x="83" y="152" onClick={this.handleRoom3}>R3</text>
+						<text x="115" y="152" onClick={this.handleRoom4}>R4</text>
+						<text x="148" y="152" onClick={this.handleRoom5}>R5</text>
+						<text x="181" y="152" onClick={this.handleRoom6}>R6</text>
 					</g>
 					
 					<g style = {{fill:"none",stroke: "#4f4f4f", strokeWidth:"2"}}>

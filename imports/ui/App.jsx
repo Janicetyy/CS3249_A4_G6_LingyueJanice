@@ -87,7 +87,7 @@ export function App() {
 			<div>
 				<LoadGraph />
 			</div>
-			<div style={{textAlign:"center"}}>
+			<div style={{position: "absolute", top:"500px", left:"50%", transform: "translateX(-50%)"}}>
 				<LoadFloorPlan />
 			</div>
 		</div>
