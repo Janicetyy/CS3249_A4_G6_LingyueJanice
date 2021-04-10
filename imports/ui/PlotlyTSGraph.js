@@ -18,8 +18,12 @@ export class TSGraph extends React.Component {
 		this.setState({
 			data: this.formatPlotData() ,
 			layout: {
-				title: 'Temperature vs Timestamp',
-				y_anchor: "top",
+				title: 'Temperature vs Timestamp',	
+				font: {
+					family: "sans-serif",
+					size:20,
+					color:"rgb(0,0,0)"
+				},
 				autosize:true,
 				xaxis: { 
 					autorange: true,

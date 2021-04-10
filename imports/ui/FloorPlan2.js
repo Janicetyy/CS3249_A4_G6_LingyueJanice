@@ -126,7 +126,7 @@ export class FloorPlan extends React.Component {
     render(){
         return( 
             <div>
-                <h1 style={{textAlign: "center"}}>Floor Plan</h1>
+                <h2 style={{textAlign: "center"}}>Floor Plan</h2>
 				<svg
 				   xmlns="http://www.w3.org/2000/svg"
 				   width="650" 
