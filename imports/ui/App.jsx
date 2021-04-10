@@ -22,13 +22,9 @@ export function App() {
 		//Minutes to be set in interval of 15, round down
 		e.setMinutes(e.getMinutes() - (e.getMinutes() % 15));
 		e.setSeconds(0);
-		if (e.getTime() > maxEndDate.getTime()) {
-			setEndDate(maxEndDate);
-		} else if (e.getTime() < startDate.getTime()) {
-			setEndDate(startDate);
-		} else {
-			setEndDate(e);
-		}
+		if (e.getTime() > maxEndDate.getTime()) { setEndDate(maxEndDate); 0} 
+		else if (e.getTime() < startDate.getTime()) { setEndDate(startDate); } 
+		else { setEndDate(e); }
 	}
 	
 	function checkStartDate(e) {
@@ -36,14 +32,9 @@ export function App() {
 		//Minutes to be set in interval of 15, round down
 		e.setMinutes(e.getMinutes() - (e.getMinutes() % 15));
 		e.setSeconds(0);
-		if (e.getTime() < minStartDate.getTime()) {
-			setStartDate(minStartDate);
-		}
-		else if (e.getTime() > endDate.getTime()) {
-			setStartDate(endDate);
-		} else{
-			setStartDate(e);
-		}
+		if (e.getTime() < minStartDate.getTime()) { setStartDate(minStartDate); }
+		else if (e.getTime() > endDate.getTime()) { setStartDate(endDate); } 
+		else{ setStartDate(e); }
 	}
 	
 	function handleDates(e) {
@@ -62,55 +53,38 @@ export function App() {
 	function handleRoomToggle (e) {
 		setTraceToggle(e);
 	}
-
-	function handleAvgChange(e) {
-		avg[e.room] = e.value;
-		setAvg(avg);
+	
+	function handleAvgChange (e) {
+		if ((avg[Number(e.roomId)] !== e.average) && (e.roomId !== 'undefined')) {
+			avg[Number(e.roomId)] = e.average;
+			setAvg(avg);
+		}
 	}
 
 
 	function LoadGraph() {
 		return(
-			<TSGraph 
-				startDate = {startDate} 
-				endDate = {endDate} 
-				chartWidth = {chartWidth}
-				roomIds = {roomId}
-				onGetDates={handleDates}
-				onMaxChange={handleMax}
-				toggle={traceToggle}
-				onAvgChange0={(e)=>handleAvgChange({value:e, room:0})}
-				onAvgChange1={(e)=>handleAvgChange({value:e, room:1})}
-				onAvgChange2={(e)=>handleAvgChange({value:e, room:2})}
-				onAvgChange3={(e)=>handleAvgChange({value:e, room:3})}
-				onAvgChange4={(e)=>handleAvgChange({value:e, room:4})}
-				onAvgChange5={(e)=>handleAvgChange({value:e, room:5})}
-				onAvgChange6={(e)=>handleAvgChange({value:e, room:6})}
+			<TSGraph startDate={startDate} endDate={endDate} chartWidth={chartWidth}
+				roomIds={roomId} onGetDates={handleDates} onMaxChange={handleMax}
+				toggle={traceToggle} onAvgChange={handleAvgChange}
 			/>
 		);
 	}
 	
 	function LoadFloorPlan() {
 		return (
-			<FloorPlan 
-				tempList = {avg}
-				toggle={traceToggle}
-				onToggle = {handleRoomToggle}/>
+			<FloorPlan tempList={avg} toggle={traceToggle} onToggle={handleRoomToggle}/>
 		);
 	}
 	
 	return (
 		<div>
 			<div>
-				<TopAdjustmentPanel 
-					startDate = {startDate} 
-					endDate = {endDate} 
-					max = {max}
-					onStartDateChange = {checkStartDate} 
-					onEndDateChange = {checkEndDate}
-					onChartWidthChange = {handleChartWidth}/>
+				<TopAdjustmentPanel startDate={startDate} endDate={endDate} max={max}
+					onStartDateChange={checkStartDate} 	onEndDateChange={checkEndDate}
+					onChartWidthChange={handleChartWidth}/>
 			</div>
-			<div style={{marginLeft:"3%", marginRight:"3%", width:"90%"}}>
+			<div>
 				<LoadGraph />
 			</div>
 			<div style={{textAlign:"center"}}>

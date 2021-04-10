@@ -22,64 +22,63 @@ export class FloorPlan extends React.Component {
 		var temp = this.props.tempList;
         var color = [];
         var i = 0;
-        for (const tog in this.state.toggle){
-            if(temp[i]>23) {
-                color[i] = tog?'rgb(200,200,255)':'rgb(255,255,255)';
-            } else if (temp[i]>22.5) {
-                color[i] = tog?'rgb(185,185,255)':'rgb(255,255,255)';
-            } else if (temp[i]>22) {
-                color[i] = tog?'rgb(170,170,255)':'rgb(255,255,255)';
-            } else if (temp[i]>21.5) {
-                color[i] = tog?'rgb(155,155,255)':'rgb(255,255,255)';
-            } else if (temp[i]>21) {
-                color[i] = tog?'rgb(140,140,255)':'rgb(255,255,255)'; 
-            } else if (temp[i]>20.5) {
-                color[i] = tog?'rgb(125,125,255)':'rgb(255,255,255)';
-            } else if (temp[i]>20) {
-                color[i] = tog?'rgb(110,110,255)':'rgb(255,255,255)'; 
-            } else if (temp[i]>19.5) {
-                color[i] = tog?'rgb(95,95,255)':'rgb(255,255,255)';
-            } else if (temp[i]>19) {
-                color[i] = tog?'rgb(80,80,255)':'rgb(255,255,255)';
-            } else if (temp[i]>18.5) {
-                color[i] = tog?'rgb(65,65,255)':'rgb(255,255,255)';
-            } else if (temp[i]>18) {
-                color[i] = tog?'rgb(50,50,255)':'rgb(255,255,255)';
-            } else if (temp[i]>17.5) {
-                color[i] = tog?'rgb(35,35,255)':'rgb(255,255,255)';
-            } else if (temp[i]>17) {
-                color[i] = tog?'rgb(20,20,255)':'rgb(255,255,255)';
-            } else {
-                color[i] = tog?'rgb(5,5,255)':'rgb(255,255,255)';
-            }
+		var togObj = this.state.toggle;
+        for (const tog in togObj){
+			if(!togObj[tog]) { color[i] = 'rgb(255,255,255)'; }
+			else if(temp[i]>23) {
+				color[i] = 'rgb(200,200,255)'
+			} else if (temp[i]>22.5) {
+				color[i] = 'rgb(185,185,255)'
+			} else if (temp[i]>22) {
+				color[i] = 'rgb(170,170,255)'
+			} else if (temp[i]>21.5) {
+				color[i] = 'rgb(155,155,255)'
+			} else if (temp[i]>21) {
+				color[i] = 'rgb(140,140,255)' 
+			} else if (temp[i]>20.5) {
+				color[i] = 'rgb(125,125,255)'
+			} else if (temp[i]>20) {
+				color[i] = 'rgb(110,110,255)' 
+			} else if (temp[i]>19.5) {
+				color[i] = 'rgb(95,95,255)'
+			} else if (temp[i]>19) {
+				color[i] = 'rgb(80,80,255)'
+			} else if (temp[i]>18.5) {
+				color[i] = 'rgb(65,65,255)'
+			} else if (temp[i]>18) {
+				color[i] = 'rgb(50,50,255)'
+			} else if (temp[i]>17.5) {
+				color[i] = 'rgb(35,35,255)'
+			} else if (temp[i]>17) {
+				color[i] = 'rgb(20,20,255)'
+			} else {
+				color[i] = 'rgb(5,5,255)'
+			}
             i++;
         }
-		
 		return color;
 	}
 	
 	componentDidMount() {
 		var color = this.updateColor();
 		this.setState({
-			color: color
+			color: color,
+			toggle: {
+				room0: ((this.props.toggle & 0b0000001) === 0b0000001),
+				room1: ((this.props.toggle & 0b0000010) === 0b0000010),
+				room2: ((this.props.toggle & 0b0000100) === 0b0000100),
+				room3: ((this.props.toggle & 0b0001000) === 0b0001000),
+				room4: ((this.props.toggle & 0b0010000) === 0b0010000),
+				room5: ((this.props.toggle & 0b0100000) === 0b0100000),
+				room6: ((this.props.toggle & 0b1000000) === 0b1000000)
+			}
 		});
 	}
 	
-	componentDidUpdate(prevProps, prevState) {
-        
-		var color = this.updateColor();
-		if(
-			(this.state.color[0] !== color[0]) ||
-			(this.state.color[1] !== color[1]) ||
-			(this.state.color[2] !== color[2]) ||
-			(this.state.color[3] !== color[3]) ||
-			(this.state.color[4] !== color[4]) ||
-			(this.state.color[5] !== color[5]) ||
-			(this.state.color[6] !== color[6]) 
-		){
-			this.setState({
-				color: color
-			});
+	componentDidUpdate(prevProps, prevState) {		
+		if(this.state.toggle !== prevState.toggle){
+			var color = this.updateColor();
+			this.setState({	color: color });
 		}
 	}
 
@@ -87,63 +86,42 @@ export class FloorPlan extends React.Component {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0000001;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {...toggle,room0:((toggle & 0b0000010) === 0b0000010) }
-        });
     }
 
     handleRoom1() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0000010;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room1:((toggle & 0b0000010) === 0b0000010)}
-        });
     }
 
     handleRoom2() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0000100;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room2:((toggle & 0b0000100) === 0b0000100)}
-        });
     }
 
     handleRoom3() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0001000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room3:((toggle & 0b0001000) === 0b0001000)}
-        });
     }
 
     handleRoom4() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0010000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room4:((toggle & 0b0010000) === 0b0010000)}
-        });
     }
 
     handleRoom5() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b0100000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room5:((toggle & 0b0100000) === 0b0100000)}
-        });
     }
 
     handleRoom6() {
         var toggle = this.props.toggle;
         toggle = toggle ^ 0b1000000;
         this.props.onToggle(toggle);
-        this.setState = ({
-            toggle: {room6:((toggle & 0b1000000) === 0b1000000)}
-      });
     }
     render(){
         return( 

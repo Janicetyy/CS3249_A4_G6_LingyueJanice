@@ -39,16 +39,8 @@ export class TSGraph extends React.Component {
 	}
 	
 	retrievePlotData(props) {
-		var startDate = new Date(
-			props.startDate.getFullYear(),
-			props.startDate.getMonth(),
-			props.startDate.getDate(),
-			0,0,0);
-		var endDate = new Date(
-			props.endDate.getFullYear(),
-			props.endDate.getMonth(),
-			props.endDate.getDate(),
-			0,0,0);
+		var startDate = new Date((props.startDate).toDateString());
+		var endDate = new Date((props.endDate).toDateString());
 			
 		var results = TSDCollection.find({
 			RoomId: props.RoomId,
@@ -56,7 +48,6 @@ export class TSGraph extends React.Component {
 			}).fetch();
 		
 		var roomData=[];
-		//map db data into array for chart plotting
 		results.map((sample) => {
 			var i;
 			for (i = 0; i < sample.Datapoint.length; i++) {
@@ -87,6 +78,8 @@ export class TSGraph extends React.Component {
 			var average = this.getRoomAverage(roomData);
 		}
 		
+		this.props.onAvgChange({average:average, roomId:props.RoomId});
+		
 		var roomX = [];
 		var roomY = [];
 		const downsampled = LTTB(roomData, props.chartWidth);
@@ -106,23 +99,7 @@ export class TSGraph extends React.Component {
 			total += temperature.y;
 		})
 		var avg = total / count;	
-		return avg;
-	}
-	
-	getAllAvg(allData){
-		var allTemp = [];
-		if(allData[0] !== 'undefined') {
-			allData.forEach((roomTemp) => {
-				allTemp.push(Math.round(roomTemp.average));
-			});
-			this.props.onAvgChange0(allTemp[0]);
-			this.props.onAvgChange1(allTemp[1]);
-			this.props.onAvgChange2(allTemp[2]);
-			this.props.onAvgChange3(allTemp[3]);
-			this.props.onAvgChange4(allTemp[4]);
-			this.props.onAvgChange5(allTemp[5]);
-			this.props.onAvgChange6(allTemp[6]);
-		}
+		return Math.round(avg);
 	}
 	
 	getAllRoomData() {
@@ -140,7 +117,6 @@ export class TSGraph extends React.Component {
 	
 	formatPlotData () {		
 		var allData = this.getAllRoomData();
-		this.getAllAvg(allData);
 		var tog = this.props.toggle;
 		
 		var trace0 = {
@@ -150,7 +126,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0000001) === 0b0000001? true : "legendonly",
 		  x: allData[0].roomX,
 		  y: allData[0].roomY,
-		  line: {color: '#5da5da'}
+		  line: {color: '#438bde'}
 		}
 
 		var trace1 = {
@@ -199,7 +175,7 @@ export class TSGraph extends React.Component {
 		  visible: (tog & 0b0100000) === 0b0100000? true : "legendonly",
 		  x: allData[5].roomX,
 		  y: allData[5].roomY,
-		  line: {color: '#3bbdbd'}
+		  line: {color: '#35bdb6'}
 		}		
 		var trace6 = {
 		  type: "scatter",
@@ -230,7 +206,6 @@ export class TSGraph extends React.Component {
         frames={this.state.frames}
         config={this.state.config}
 		useResizeHandler
-		style={{width:"100%"}}
 		onRelayout={(e) => this.handleRelayout(e)}
       />
     );
