@@ -6,8 +6,23 @@ import { TSGraph } from '/imports/ui/PlotlyTSGraph';
 import { FloorPlan } from '/imports/ui/FloorPlan';
 import { TopAdjustmentPanel } from '/imports/ui/TopAdjustmentPanel';
 
+import { BrowserRouter as Router, Switch, Route, generatePath, useParams  } from 'react-router-dom';
+export function Linkable() {
+	return(
+		<Router>
+			<div>
+			<Switch>
+				  <Route path="/:hist/:room0/:room1/:room2/:room3/:room4/:room5/:room6">
+					<App />
+				  </Route>
+				  <Route path="*" component={App} />
+			</Switch>
+			</div>
+		</Router>
+	);
+}
+
 export function App() {
-	
 	const [startDate, setStartDate] = useState(new Date('2013-10-02T00:00'));
 	const [endDate, setEndDate] = useState(new Date('2013-10-02T23:45'));
 	const [roomId, setRoomId] = useState(['0','1','2','3','4','5','6']);
@@ -16,6 +31,16 @@ export function App() {
 	const [avg, setAvg] = useState([20,20,20,20,20,20,20]);
 	const [traceToggle, setTraceToggle] = useState(0b1111111);
 	const useSub = TSGSub(startDate, endDate, roomId);
+	let params = useParams();
+	
+	useEffect(() => {		
+		if (!params.length && params.hist === "A4") {
+			var toggleHist = "0b" + params.room0 + params.room1 + params.room2 + params.room3 + params.room4 + params.room5 + params.room6;
+			var temp = toggleHist | 0b0000000
+			setTraceToggle(toggleHist);
+		}
+	},[]);
+		
 
 	function checkEndDate(e) {
 		var maxEndDate = new Date('2013-12-03T15:30:00');

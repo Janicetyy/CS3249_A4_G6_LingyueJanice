@@ -19,6 +19,7 @@
     "react-datepicker": "^3.6.0",
     "react-dom": "^16.13.1",
     "react-plotly.js": "^2.5.1",
+    "react-router-dom": "^5.2.0",
     "simpl-schema": "^1.10.2",
     "xstate": "^4.17.1"
   },
