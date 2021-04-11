@@ -6,13 +6,13 @@ import { TSGraph } from '/imports/ui/PlotlyTSGraph';
 import { FloorPlan } from '/imports/ui/FloorPlan';
 import { TopAdjustmentPanel } from '/imports/ui/TopAdjustmentPanel';
 
-import { BrowserRouter as Router, Switch, Route, generatePath, useParams  } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, generatePath, useParams } from 'react-router-dom';
 export function Linkable() {
 	return(
 		<Router>
 			<div>
 			<Switch>
-				  <Route path="/:hist/:room0/:room1/:room2/:room3/:room4/:room5/:room6">
+				  <Route path="/:hist/:room0/:room1/:room2/:room3/:room4/:room5/:room6/:startDate/:endDate">
 					<App />
 				  </Route>
 				  <Route path="*" component={App} />
@@ -30,14 +30,18 @@ export function App() {
 	const [max, setMax] = useState(76);
 	const [avg, setAvg] = useState([20,20,20,20,20,20,20]);
 	const [traceToggle, setTraceToggle] = useState(0b1111111);
+	const [newPath, setNewPath] = useState('');
 	const useSub = TSGSub(startDate, endDate, roomId);
 	let params = useParams();
+	let baseURL = 'localhost:3000';
 	
 	useEffect(() => {		
 		if (!params.length && params.hist === "A4") {
 			var toggleHist = "0b" + params.room0 + params.room1 + params.room2 + params.room3 + params.room4 + params.room5 + params.room6;
-			var temp = toggleHist | 0b0000000
+			var stringtoBinary = toggleHist | 0b0000000
 			setTraceToggle(toggleHist);
+			setStartDate(new Date(Number(params.startDate)));
+			setEndDate(new Date(Number(params.endDate)));
 		}
 	},[]);
 		
@@ -102,6 +106,24 @@ export function App() {
 		);
 	}
 	
+	function handleSaveState() {
+		var binaryToString = '0000000' + traceToggle.toString(2);
+		console.log(binaryToString);
+		var path = generatePath("/:hist/:room0/:room1/:room2/:room3/:room4/:room5/:room6/:startDate/:endDate", {
+			hist:"A4",
+			room0: binaryToString[binaryToString.length - 7],
+			room1: binaryToString[binaryToString.length - 6],
+			room2: binaryToString[binaryToString.length - 5],
+			room3: binaryToString[binaryToString.length - 4],
+			room4: binaryToString[binaryToString.length - 3],
+			room5: binaryToString[binaryToString.length - 2],
+			room6: binaryToString[binaryToString.length - 1],
+			startDate: startDate.getTime(),
+			endDate: endDate.getTime()
+		});
+		setNewPath(baseURL + path);
+	}
+	
 	return (
 		<div>
 			<div>
@@ -114,6 +136,10 @@ export function App() {
 			</div>
 			<div style={{position: "absolute", top:"500px", left:"50%", transform: "translateX(-50%)"}}>
 				<LoadFloorPlan />
+				<div className="linkable">
+					<input readOnly type="text" value={newPath} />
+					<button onClick={handleSaveState}>Create Link</button>
+				</div>
 			</div>
 		</div>
 	)

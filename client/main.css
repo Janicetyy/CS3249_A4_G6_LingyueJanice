@@ -13,3 +13,11 @@ h2 {
 	font-size:28px;
 	font-weight:normal;
 }
+
+.linkable {
+	position: relative;
+	top:10px; 
+	left:50%;
+	margin-Bottom: 20px; 
+	transform: translateX(-20%);
+}
