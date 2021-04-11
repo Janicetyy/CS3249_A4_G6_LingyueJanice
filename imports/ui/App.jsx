@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { TSGSub } from '/imports/ui/ClientSub'
 import { TSDCollection } from '/imports/db/TimeSeriesDataCollection';
 import { TSGraph } from '/imports/ui/PlotlyTSGraph';
-import { FloorPlan } from '/imports/ui/FloorPlan2';
+import { FloorPlan } from '/imports/ui/FloorPlan';
 import { TopAdjustmentPanel } from '/imports/ui/TopAdjustmentPanel';
 
 export function App() {
