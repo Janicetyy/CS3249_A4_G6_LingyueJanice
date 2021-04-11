@@ -4,13 +4,6 @@ export class FloorPlan extends React.Component {
     constructor(props){
         super(props);
 
-        this.handleRoom0 = this.handleRoom0.bind(this);
-        this.handleRoom1 = this.handleRoom1.bind(this);
-        this.handleRoom2 = this.handleRoom2.bind(this);
-        this.handleRoom3 = this.handleRoom3.bind(this);
-        this.handleRoom4 = this.handleRoom4.bind(this);
-        this.handleRoom5 = this.handleRoom5.bind(this);
-        this.handleRoom6 = this.handleRoom6.bind(this);
         this.state = {
             color: ['rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)',
 			'rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)'],
@@ -81,48 +74,37 @@ export class FloorPlan extends React.Component {
 			this.setState({	color: color });
 		}
 	}
-
-    handleRoom0() {
-        var toggle = this.props.toggle;
-        toggle = toggle ^ 0b0000001;
-        this.props.onToggle(toggle);
-    }
-
-    handleRoom1() {
-        var toggle = this.props.toggle;
-        toggle = toggle ^ 0b0000010;
-        this.props.onToggle(toggle);
-    }
-
-    handleRoom2() {
-        var toggle = this.props.toggle;
-        toggle = toggle ^ 0b0000100;
-        this.props.onToggle(toggle);
-    }
-
-    handleRoom3() {
-        var toggle = this.props.toggle;
-        toggle = toggle ^ 0b0001000;
-        this.props.onToggle(toggle);
-    }
-
-    handleRoom4() {
-        var toggle = this.props.toggle;
-        toggle = toggle ^ 0b0010000;
-        this.props.onToggle(toggle);
-    }
-
-    handleRoom5() {
-        var toggle = this.props.toggle;
-        toggle = toggle ^ 0b0100000;
-        this.props.onToggle(toggle);
-    }
-
-    handleRoom6() {
-        var toggle = this.props.toggle;
-        toggle = toggle ^ 0b1000000;
-        this.props.onToggle(toggle);
-    }
+	
+	handleRoom(e) {
+		var toggle = this.props.toggle;
+		console.log(e.room);
+		switch (e.room) {
+			case 0:
+				toggle = toggle ^ 0b0000001;
+				break;
+			case 1:
+				toggle = toggle ^ 0b0000010;
+				break;
+			case 2:
+				toggle = toggle ^ 0b0000100;
+				break;
+			case 3:
+				toggle = toggle ^ 0b0001000;
+				break;
+			case 4:
+				toggle = toggle ^ 0b0010000;
+				break;
+			case 5:
+				toggle = toggle ^ 0b0100000;
+				break;
+			case 6:
+				toggle = toggle ^ 0b1000000;
+				break;
+		}
+		this.props.onToggle(toggle);
+	}
+		
+		
     render(){
         return( 
             <div>
@@ -136,45 +118,45 @@ export class FloorPlan extends React.Component {
 				  <g>
 					<g style={{cursor:'pointer'}}>
 						<rect style={{fill:this.state.color[0]}} width="80" height="70" x="7" y="7" 
-							onClick={this.handleRoom0}/>
+							onClick={() => this.handleRoom({room:0})}/>
 						<rect style={{fill:this.state.color[1]}} width="30" height="40" x="7" y="121" 
-							onClick={this.handleRoom1}/>
+							onClick={() => this.handleRoom({room:1})}/>
 						<rect style={{fill:this.state.color[2]}} width="30" height="40" x="40" y="121" 
-							onClick={this.handleRoom2}/>
+							onClick={() => this.handleRoom({room:2})}/>
 						<rect style={{fill:this.state.color[3]}} width="30" height="40" x="73" y="121" 
-							onClick={this.handleRoom3}/>
+							onClick={() => this.handleRoom({room:3})}/>
 						<rect style={{fill:this.state.color[4]}} width="30" height="40" x="106" y="121" 
-							onClick={this.handleRoom4}/>
+							onClick={() => this.handleRoom({room:4})}/>
 						<rect style={{fill:this.state.color[5]}} width="30" height="40" x="139" y="121" 
-							onClick={this.handleRoom5}/>
+							onClick={() => this.handleRoom({room:5})}/>
 						<rect style={{fill:this.state.color[6]}} width="30" height="40" x="172" y="121" 
-							onClick={this.handleRoom6}/>
+							onClick={() => this.handleRoom({room:6})}/>
 					</g>
 					<g style = {{fontSize:"4px", fontFamily:"sans-serif", cursor:'pointer'}}>
-						<text x="30" y="30" onClick={this.handleRoom0}>UPPER LEVEL</text>
-						<text x="30" y="34" onClick={this.handleRoom0}>RESIDENTIAL</text>
-						<text x="30" y="38" onClick={this.handleRoom0}>LOUNGE</text>		
-						<text x="15" y="138" onClick={this.handleRoom1}>SINGLE</text>
-						<text x="12" y="142" onClick={this.handleRoom1}>BEDROOM</text>
-						<text x="48" y="138" onClick={this.handleRoom2}>SINGLE</text>
-						<text x="45" y="142" onClick={this.handleRoom2}>BEDROOM</text>	
-						<text x="81" y="138" onClick={this.handleRoom3}>SINGLE</text>
-						<text x="78" y="142" onClick={this.handleRoom3}>BEDROOM</text>
-						<text x="113" y="138" onClick={this.handleRoom4}>SINGLE</text>
-						<text x="110" y="142" onClick={this.handleRoom4}>BEDROOM</text>
-						<text x="146" y="138" onClick={this.handleRoom5}>SINGLE</text>
-						<text x="143" y="142" onClick={this.handleRoom5}>BEDROOM</text>		   
-						<text x="180" y="138" onClick={this.handleRoom6}>SINGLE</text>
-						<text x="176" y="142" onClick={this.handleRoom6}>BEDROOM</text>
+						<text x="30" y="30" onClick={() => this.handleRoom({room:0})}>UPPER LEVEL</text>
+						<text x="30" y="34" onClick={() => this.handleRoom({room:0})}>RESIDENTIAL</text>
+						<text x="30" y="38" onClick={() => this.handleRoom({room:0})}>LOUNGE</text>		
+						<text x="15" y="138" onClick={() => this.handleRoom({room:1})}>SINGLE</text>
+						<text x="12" y="142" onClick={() => this.handleRoom({room:1})}>BEDROOM</text>
+						<text x="48" y="138" onClick={() => this.handleRoom({room:2})}>SINGLE</text>
+						<text x="45" y="142" onClick={() => this.handleRoom({room:2})}>BEDROOM</text>	
+						<text x="81" y="138" onClick={() => this.handleRoom({room:3})}>SINGLE</text>
+						<text x="78" y="142" onClick={() => this.handleRoom({room:3})}>BEDROOM</text>
+						<text x="113" y="138" onClick={() => this.handleRoom({room:4})}>SINGLE</text>
+						<text x="110" y="142" onClick={() => this.handleRoom({room:4})}>BEDROOM</text>
+						<text x="146" y="138" onClick={() => this.handleRoom({room:5})}>SINGLE</text>
+						<text x="143" y="142" onClick={() => this.handleRoom({room:5})}>BEDROOM</text>		   
+						<text x="180" y="138" onClick={() => this.handleRoom({room:6})}>SINGLE</text>
+						<text x="176" y="142" onClick={() => this.handleRoom({room:6})}>BEDROOM</text>
 					</g>
 					<g style = {{fontSize:"10px", fontFamily:"Algerian", cursor:'pointer'}}>
-						<text x="28" y="55" onClick={this.handleRoom0}>Room 0</text>
-						<text x="17" y="152" onClick={this.handleRoom1}>R1</text>
-						<text x="50" y="152" onClick={this.handleRoom2}>R2</text>
-						<text x="83" y="152" onClick={this.handleRoom3}>R3</text>
-						<text x="115" y="152" onClick={this.handleRoom4}>R4</text>
-						<text x="148" y="152" onClick={this.handleRoom5}>R5</text>
-						<text x="181" y="152" onClick={this.handleRoom6}>R6</text>
+						<text x="28" y="55" onClick={() => this.handleRoom({room:0})}>Room 0</text>
+						<text x="17" y="152" onClick={() => this.handleRoom({room:1})}>R1</text>
+						<text x="50" y="152" onClick={() => this.handleRoom({room:2})}>R2</text>
+						<text x="83" y="152" onClick={() => this.handleRoom({room:3})}>R3</text>
+						<text x="115" y="152" onClick={() => this.handleRoom({room:4})}>R4</text>
+						<text x="148" y="152" onClick={() => this.handleRoom({room:5})}>R5</text>
+						<text x="181" y="152" onClick={() => this.handleRoom({room:6})}>R6</text>
 					</g>
 					
 					<g style = {{fill:"none",stroke: "#4f4f4f", strokeWidth:"2"}}>
