@@ -4,7 +4,7 @@ export class FloorPlan extends React.Component {
     constructor(props){
         super(props);
 		
-		 this.handleToggle = this.handleToggle.bind(this);
+		this.handleToggle = this.handleToggle.bind(this);
 		
         this.state = {
             color: ['rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)',
@@ -79,7 +79,7 @@ export class FloorPlan extends React.Component {
 	
 	handleToggle(e) {
 		var toggle = this.props.toggle;
-		if (e === 0) { toggle = toggle ^ 0b0000001; }
+		if (e == 0) { toggle = toggle ^ 0b0000001; }
 		else if (e === 1) { toggle = toggle ^ 0b0000010; }
 		else if (e === 2) { toggle = toggle ^ 0b0000100; }
 		else if (e === 3) { toggle = toggle ^ 0b0001000; }
@@ -103,45 +103,45 @@ export class FloorPlan extends React.Component {
 				  <g>
 					<g style={{cursor:'pointer'}}>
 						<rect style={{fill:this.state.color[0]}} width="80" height="70" x="7" y="7" 
-							onClick={this.handleToggle(this,0)}/>
+							onClick={this.handleToggle.bind(this,0)}/>
 						<rect style={{fill:this.state.color[1]}} width="30" height="40" x="7" y="121" 
-							onClick={this.handleToggle(this,1)}/>
+							onClick={this.handleToggle.bind(this,1)}/>
 						<rect style={{fill:this.state.color[2]}} width="30" height="40" x="40" y="121" 
-							onClick={this.handleToggle(this,2)}/>
+							onClick={this.handleToggle.bind(this,2)}/>
 						<rect style={{fill:this.state.color[3]}} width="30" height="40" x="73" y="121" 
-							onClick={this.handleToggle(this,3)}/>
+							onClick={this.handleToggle.bind(this,3)}/>
 						<rect style={{fill:this.state.color[4]}} width="30" height="40" x="106" y="121" 
-							onClick={this.handleToggle(this,4)}/>
+							onClick={this.handleToggle.bind(this,4)}/>
 						<rect style={{fill:this.state.color[5]}} width="30" height="40" x="139" y="121" 
-							onClick={this.handleToggle(this,5)}/>
+							onClick={this.handleToggle.bind(this,5)}/>
 						<rect style={{fill:this.state.color[6]}} width="30" height="40" x="172" y="121" 
-							onClick={this.handleToggle(this,6)}/>
+							onClick={this.handleToggle.bind(this,6)}/>
 					</g>
 					<g style = {{fontSize:"4px", fontFamily:"sans-serif", cursor:'pointer'}}>
-						<text x="30" y="30" onClick={this.handleToggle(this,0)}>UPPER LEVEL</text>
-						<text x="30" y="34" onClick={this.handleToggle(this,0)}>RESIDENTIAL</text>
-						<text x="30" y="38" onClick={this.handleToggle(this,0)}>LOUNGE</text>		
-						<text x="15" y="138" onClick={this.handleToggle(this,1)}>SINGLE</text>
-						<text x="12" y="142" onClick={this.handleToggle(this,1)}>BEDROOM</text>
-						<text x="48" y="138" onClick={this.handleToggle(this,2)}>SINGLE</text>
-						<text x="45" y="142" onClick={this.handleToggle(this,2)}>BEDROOM</text>	
-						<text x="81" y="138" onClick={this.handleToggle(this,3)}>SINGLE</text>
-						<text x="78" y="142" onClick={this.handleToggle(this,3)}>BEDROOM</text>
-						<text x="113" y="138" onClick={this.handleToggle(this,4)}>SINGLE</text>
-						<text x="110" y="142" onClick={this.handleToggle(this,4)}>BEDROOM</text>
-						<text x="146" y="138" onClick={this.handleToggle(this,5)}>SINGLE</text>
-						<text x="143" y="142" onClick={this.handleToggle(this,5)}>BEDROOM</text>		   
-						<text x="180" y="138" onClick={this.handleToggle(this,6)}>SINGLE</text>
-						<text x="176" y="142" onClick={this.handleToggle(this,6)}>BEDROOM</text>
+						<text x="30" y="30" onClick={this.handleToggle.bind(this,0)}>UPPER LEVEL</text>
+						<text x="30" y="34" onClick={this.handleToggle.bind(this,0)}>RESIDENTIAL</text>
+						<text x="30" y="38" onClick={this.handleToggle.bind(this,0)}>LOUNGE</text>		
+						<text x="15" y="138" onClick={this.handleToggle.bind(this,1)}>SINGLE</text>
+						<text x="12" y="142" onClick={this.handleToggle.bind(this,1)}>BEDROOM</text>
+						<text x="48" y="138" onClick={this.handleToggle.bind(this,2)}>SINGLE</text>
+						<text x="45" y="142" onClick={this.handleToggle.bind(this,2)}>BEDROOM</text>	
+						<text x="81" y="138" onClick={this.handleToggle.bind(this,3)}>SINGLE</text>
+						<text x="78" y="142" onClick={this.handleToggle.bind(this,3)}>BEDROOM</text>
+						<text x="113" y="138" onClick={this.handleToggle.bind(this,4)}>SINGLE</text>
+						<text x="110" y="142" onClick={this.handleToggle.bind(this,4)}>BEDROOM</text>
+						<text x="146" y="138" onClick={this.handleToggle.bind(this,5)}>SINGLE</text>
+						<text x="143" y="142" onClick={this.handleToggle.bind(this,5)}>BEDROOM</text>		   
+						<text x="180" y="138" onClick={this.handleToggle.bind(this,6)}>SINGLE</text>
+						<text x="176" y="142" onClick={this.handleToggle.bind(this,6)}>BEDROOM</text>
 					</g>
 					<g style = {{fontSize:"10px", fontFamily:"Algerian", cursor:'pointer'}}>
-						<text x="28" y="55" onClick={this.handleToggle(this,0)}>Room 0</text>
-						<text x="17" y="152" onClick={this.handleToggle(this,1)}>R1</text>
-						<text x="50" y="152" onClick={this.handleToggle(this,2)}>R2</text>
-						<text x="83" y="152" onClick={this.handleToggle(this,3)}>R3</text>
-						<text x="115" y="152" onClick={this.handleToggle(this,4)}>R4</text>
-						<text x="148" y="152" onClick={this.handleToggle(this,5)}>R5</text>
-						<text x="181" y="152" onClick={this.handleToggle(this,6)}>R6</text>
+						<text x="28" y="55" onClick={this.handleToggle.bind(this,0)}>Room 0</text>
+						<text x="17" y="152" onClick={this.handleToggle.bind(this,1)}>R1</text>
+						<text x="50" y="152" onClick={this.handleToggle.bind(this,2)}>R2</text>
+						<text x="83" y="152" onClick={this.handleToggle.bind(this,3)}>R3</text>
+						<text x="115" y="152" onClick={this.handleToggle.bind(this,4)}>R4</text>
+						<text x="148" y="152" onClick={this.handleToggle.bind(this,5)}>R5</text>
+						<text x="181" y="152" onClick={this.handleToggle.bind(this,6)}>R6</text>
 					</g>
 					
 					<g style = {{fill:"none",stroke: "#4f4f4f", strokeWidth:"2"}}>
